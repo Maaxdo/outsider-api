@@ -41,7 +41,7 @@ return [
         'url' => env('PAYSTACK_API_URL', 'https://api.paystack.co'),
         'secret_key' => env('PAYSTACK_SECRET_KEY', ''),
         'public_key' => env('PAYSTACK_PUBLIC_KEY', ''),
-        'callback_url' => env('PAYSTACK_CALLBACK_URL', 'https://spurce.com')
+        'callback_url' => env('PAYSTACK_CALLBACK_URL', '')
     ]
 
 ];
