@@ -28,6 +28,8 @@ Route::namespace('App\Http\Controllers')->group(function () {
             ->name('auth.unauthenticated');
 
 
+
+
         Route::middleware('auth:sanctum')->group(function () {
             Route::patch('/update-profile', 'Auth\AuthController@updateProfile');
             Route::patch('/update-credentials', 'Auth\AuthController@updateCredentials');
