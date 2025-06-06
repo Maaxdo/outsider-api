@@ -19,7 +19,6 @@ class Review extends Model
         'video',
         'rating',
         'review',
-        'email'
     ];
 
     public function product()

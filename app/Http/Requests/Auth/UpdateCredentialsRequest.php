@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
-class UpdateCredentialsRequest  extends FormRequest
+class UpdateCredentialsRequest extends FormRequest
 {
 
     public bool $updatedEmail = false;
@@ -29,7 +29,7 @@ class UpdateCredentialsRequest  extends FormRequest
         return [
             'email' => ['required', 'email', Rule::unique('users')->ignore($this->user()->id)],
             'current_password' => ['nullable', 'string', 'min:8', 'max:255'],
-            'password' => ['nullable', 'string', 'min:8', 'max:255', 'confirmed']
+            'password' => ['required_with:current_password', 'string', 'min:8', 'max:255', 'confirmed']
         ];
     }
 

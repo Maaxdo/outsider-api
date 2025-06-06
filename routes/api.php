@@ -21,18 +21,18 @@ Route::namespace('App\Http\Controllers')->group(function () {
 
         Route::post('/signin', 'Auth\AuthController@signIn');
         Route::post('/signup', 'Auth\AuthController@signUp');
-        Route::post('/verify-email', 'Auth\AuthController@verifyEmail');
         Route::post('/send-password-reset', 'Auth\AuthController@sendPasswordReset');
         Route::post('/reset-password', 'Auth\AuthController@resetPassword');
         Route::get('/unauthenticated', 'Auth\AuthController@unauthenticated')
             ->name('auth.unauthenticated');
 
         Route::middleware('auth:sanctum')->group(function () {
+            Route::post('/verify-email', 'Auth\AuthController@verifyEmail');
             Route::patch('/update-profile', 'Auth\AuthController@updateProfile');
             Route::patch('/update-credentials', 'Auth\AuthController@updateCredentials');
             Route::get('/user', 'Auth\AuthController@user');
             Route::post('/logout', 'Auth\AuthController@logout');
-            Route::post('/resend-otp', 'Auth\AuthController@resendEmailVerificationOtp');
+            Route::post('/resend-email-verification', 'Auth\AuthController@resendEmailVerificationOtp');
         });
     });
 
@@ -43,9 +43,9 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->group(function () {
             Route::post('/', 'Category\CategoriesController@store');
             Route::post('/{category}/update', 'Category\CategoriesController@update');
+            Route::delete('/{category}', 'Category\CategoriesController@destroy');
         });
         Route::get('/{slug}/products', 'Category\CategoriesController@viewProducts');
-        Route::delete('/{category}', 'Category\CategoriesController@destroy');
     });
 
     Route::prefix('products')->group(function () {

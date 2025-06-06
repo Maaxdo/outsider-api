@@ -31,8 +31,10 @@ class VerifyEmailRequest extends FormRequest
 
     public function verifyEmail()
     {
+        $user = $this->user();
         $otp = OneTimePassword::where('code', $this->code)
             ->where('type', 'email')
+            ->where('user_id', $user->id)
             ->first();
 
         if (!$otp) {
@@ -42,8 +44,8 @@ class VerifyEmailRequest extends FormRequest
         $otp->user->email_verified_at = now();
         $otp->user->save();
 
-         Mail::to($otp->user->email)
-             ->send(new WelcomeMail($otp->user));
+        Mail::to($otp->user->email)
+            ->send(new WelcomeMail($otp->user));
 
         $otp->delete();
     }
