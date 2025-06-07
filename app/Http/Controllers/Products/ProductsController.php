@@ -57,6 +57,7 @@ class ProductsController extends Controller
     {
         $products = Product::withSum('invoiceItems', 'quantity')
             ->orderByDesc('invoice_items_sum_quantity')
+            ->limit(8)
             ->get();
 
         $list = ProductListItemResource::collection($products);;
