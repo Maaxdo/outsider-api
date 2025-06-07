@@ -17,15 +17,11 @@ class NewsletterSubscribersController extends Controller
 
     public function store(StoreSubscriberRequest $request)
     {
-        $previous = NewsletterSubscriber::where('email', $request->email)->exists();
-
-        if ($previous) {
-            return $this->failed(null, StatusCode::BadRequest->value, 'Subscriber already exists');
-        }
-
+        $request->validate([
+            'email' => ['required', 'string', 'email']
+        ]);
         NewsletterSubscriber::create([
-            'email' => $request->email ?? null,
-            'phone' => $request->phone ? $request->dial_code . $request->phone : null,
+            'email' => $request->email,
         ]);
         return $this->success(null, 'Subscriber added successfully', StatusCode::Success->value);
     }
