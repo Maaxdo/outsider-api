@@ -53,6 +53,17 @@ class ProductsController extends Controller
         return $this->success($productsList);
     }
 
+    public function viewPopular()
+    {
+        $products = Product::whereHas('invoiceItems', function ($query) {
+            $query->where('quantity', '>', 0);
+        })->inRandomOrder()->limit(12)->get();
+
+        $list = ProductListItemResource::collection($products);;
+
+        return $this->success($list);
+    }
+
     public function show(Product $product)
     {
 

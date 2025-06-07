@@ -57,6 +57,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
             Route::delete('/{product}', 'Products\ProductsController@destroy');
             Route::post('/{product}/update', 'Products\ProductsController@update');
         });
+        Route::get('/popular', 'Products\ProductsController@viewPopular');
         Route::get('/latest', 'Products\ProductsController@viewLatest');
         Route::get('/low-cost', 'Products\ProductsController@viewLowCost');
         Route::get('/{product}', 'Products\ProductsController@show');
