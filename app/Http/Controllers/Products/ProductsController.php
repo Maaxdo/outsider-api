@@ -56,7 +56,7 @@ class ProductsController extends Controller
     public function viewPopular()
     {
         $products = Product::whereHas('invoiceItems', function ($query) {
-            $query->where('quantity', '>', 0);
+            $query->sortBy('quantity', 'desc');
         })->inRandomOrder()->limit(12)->get();
 
         $list = ProductListItemResource::collection($products);;
