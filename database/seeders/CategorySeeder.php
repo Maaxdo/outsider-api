@@ -17,19 +17,19 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Mens',
                 'slug' => 'mens',
-                'featured_image' => "categories/men.png",
+                'featured_image' => "categories/men.jpg",
                 'is_featured' => true
             ],
             [
                 'name' => 'Womens',
                 'slug' => 'womens',
-                'featured_image' => "categories/women.png",
+                'featured_image' => "categories/women.jpg",
                 'is_featured' => true
             ],
             [
                 'name' => 'Accessories',
                 'slug' => 'accessories',
-                'featured_image' => "categories/accessories.png",
+                'featured_image' => "categories/accessories.jpg",
                 'is_featured' => true
             ],
             [

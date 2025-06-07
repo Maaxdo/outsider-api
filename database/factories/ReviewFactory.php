@@ -24,7 +24,6 @@ class ReviewFactory extends Factory
             'product_id' => $product->id,
             'user_id' => $user->id,
             'rating' => random_int(1, 5),
-            'email' => $user->email,
             'review' => fake()->sentence(),
             'nickname' => $user->full_name,
             'location' => fake()->city(),

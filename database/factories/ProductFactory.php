@@ -23,14 +23,14 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->word(),
             'featured_image' => fake()->randomElement([
-                'products/tshirt.jpg',
-                'products/sweatshirt.jpg',
-                'products/hoodie.jpg',
+                'products/1.jpg',
+                'products/2.jpg',
+                'products/3.jpg',
             ]),
             'additional_images' => implode(',', [
-                'products/tshirt.jpg',
-                'products/sweatshirt.jpg',
-                'products/hoodie.jpg',
+                'products/1.jpg',
+                'products/2.jpg',
+                'products/3.jpg',
             ]),
             'shipping_details' => fake()->paragraph(),
             'base_price' => $basePrice,
