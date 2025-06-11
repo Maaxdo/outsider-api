@@ -65,6 +65,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::get('/{product}/reviews', 'Products\ProductsController@reviews');
     });
 
+    Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('cart')->group(function () {
             Route::get('/', 'Products\CartController@viewAll');
             Route::post('/', 'Products\CartController@store');
@@ -72,7 +73,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
             Route::delete('/{item}', 'Products\CartController@destroy');
             Route::patch('/{item}', 'Products\CartController@update');
         });
-    
+    });
 
     
     Route::middleware('auth:sanctum', 'verified')->group(function () {
