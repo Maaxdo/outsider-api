@@ -24,19 +24,14 @@ class OrderController extends Controller
 
         $invoiceItems = InvoiceItem::where(function ($query) use ($request) {
 
-             $status = $request->get('status');
+            $status = $request->get('status');
+            $query->whereHas('invoice', function ($query) use ($request, $status) {
 
-           
-                $query->whereHas('invoice', function ($query) use ($request, $status) {              
-
-                    if($status){
-                        $query
-                        ->where('status', '=', $status);
-                    }
-
-                    $query
-                    ->where('user_id', $request->user()->id);
-                });
+                if ($status) {
+                    $query->where('status', '=', $status);
+                }
+                $query->where('user_id', $request->user()->id);
+            });
 
         })->paginate(12);
 
@@ -107,7 +102,7 @@ class OrderController extends Controller
     public function viewAllOrders(Request $request)
     {
         $this->authorize('viewAny', Invoice::class);
-       
+
 
         $invoices = Invoice::filter()
             ->paginate(15);

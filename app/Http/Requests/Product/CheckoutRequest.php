@@ -36,6 +36,7 @@ class CheckoutRequest extends FormRequest
             'last_name' => ['required', 'string'],
             'company_name' => ['nullable', 'string'],
             'apartment' => ['required', 'string'],
+            'state' => ['required', 'string'],
             'city' => ['required', 'string'],
             'country' => ['required', 'string'],
             'phone' => ['required', 'string'],
@@ -90,7 +91,10 @@ class CheckoutRequest extends FormRequest
         $user = $this->user();
         $billingInformation = $this->except('save_billing', 'coupon_code');
         // Create or update
-        $user->billingInformations()->create($billingInformation);
+        $user->billingInformations()->create([
+            ...$billingInformation,
+            'is_default' => $user->billingInformations()->count() === 0,
+        ]);
     }
 
     public function calculatePrice(array $products)

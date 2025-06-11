@@ -65,17 +65,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::get('/{product}/reviews', 'Products\ProductsController@reviews');
     });
 
-    Route::middleware('auth:sanctum')->group(function () {
-    Route::prefix('cart')->group(function () {
-            Route::get('/', 'Products\CartController@viewAll');
-            Route::post('/', 'Products\CartController@store');
-            Route::get('/order-summary', 'Products\CartController@viewOrderSummary');
-            Route::delete('/{item}', 'Products\CartController@destroy');
-            Route::patch('/{item}', 'Products\CartController@update');
-        });
-    });
 
-    
     Route::middleware('auth:sanctum', 'verified')->group(function () {
         Route::prefix('wishlist')->group(function () {
             Route::get('/', 'Products\WishlistController@viewAll');
@@ -83,11 +73,18 @@ Route::namespace('App\Http\Controllers')->group(function () {
             Route::delete('/{item}', 'Products\WishlistController@destroy');
         });
 
-        
+
+        Route::prefix('cart')->group(function () {
+            Route::get('/', 'Products\CartController@viewAll');
+            Route::post('/', 'Products\CartController@store');
+            Route::get('/order-summary', 'Products\CartController@viewOrderSummary');
+            Route::delete('/{item}', 'Products\CartController@destroy');
+            Route::patch('/{item}', 'Products\CartController@update');
+        });
+
+
         Route::prefix('checkout')->group(function () {
             Route::get('/summary', 'Products\CheckoutController@getCheckoutSummary');
-            Route::get('/', 'Products\CheckoutController@view');
-            Route::get('/billing', 'Products\CheckoutController@billing');
             Route::post('/', 'Products\CheckoutController@checkout');
         });
 
