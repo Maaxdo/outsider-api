@@ -21,14 +21,13 @@ trait Cart
             $total -= $subTotal * $couponDiscount;
         }
 
-        $orderSummary = [
+        return [
             'sub_total' => $subTotal,
             'coupon_discount' => $couponDiscount ?? 0,
             'shipping_fee' => (float)$shippingFee,
             'total' => $total,
         ];
 
-        return $orderSummary;
     }
 
 
