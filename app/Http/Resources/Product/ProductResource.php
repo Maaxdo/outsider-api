@@ -23,9 +23,9 @@ class ProductResource extends JsonResource
 
 
         return [
-            'id' => (string)$this->id,
-            'category' =>  [
-                'id' => (string)$this->category?->id ?? '',
+            'id' => (string) $this->id,
+            'category' => [
+                'id' => (string) $this->category?->id ?? '',
                 'name' => $this->category?->name ?? '',
                 'slug' => $this->category?->slug ?? '',
             ],
@@ -34,10 +34,11 @@ class ProductResource extends JsonResource
             'additional_images' => $additionalImages,
             'name' => $this->name,
             'is_new' => $this->created_at->diffInDays() < 7,
+            'is_in_wishlist' => $this->in_wishlist,
             'price' => currency_format($this->price),
-            'discounted_price_formatted' => (float)$this->discounted_price ? currency_format($this->discounted_price) : null,
-            'discounted_price' => (float)$this->discounted_price ? (float)$this->discounted_price : null,
-            'base_price' => (float)$this->base_price,
+            'discounted_price_formatted' => (float) $this->discounted_price ? currency_format($this->discounted_price) : null,
+            'discounted_price' => (float) $this->discounted_price ? (float) $this->discounted_price : null,
+            'base_price' => (float) $this->base_price,
             'base_price_formatted' => currency_format($this->base_price),
             'rating' => [
                 'average' => $this->reviews->avg('rating') ?? 0,

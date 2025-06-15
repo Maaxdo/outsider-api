@@ -9,12 +9,10 @@ use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\Product\ProductListItemResource;
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Review\ReviewResource;
-use App\Models\Category;
 use App\Models\Product;
 use App\Traits\HttpResponses;
 use App\Traits\Pagination;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
@@ -60,7 +58,8 @@ class ProductsController extends Controller
             ->limit(8)
             ->get();
 
-        $list = ProductListItemResource::collection($products);;
+        $list = ProductListItemResource::collection($products);
+        ;
 
         return $this->success($list);
     }
@@ -87,14 +86,13 @@ class ProductsController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-
         try {
 
             DB::transaction(function () use ($request) {
                 $request->createProduct();
             });
 
-            return $this->success(null, 'Product created successfully', StatusCode::Continue->value);
+            return $this->success(null, 'Product created successfully', StatusCode::Continue ->value);
         } catch (Exception $e) {
             return $this->failed(null, StatusCode::InternalServerError->value, $e->getMessage());
         }
@@ -108,7 +106,7 @@ class ProductsController extends Controller
                 $request->updateProduct();
             });
 
-            return $this->success(null, 'Product updated successfully', StatusCode::Continue->value);
+            return $this->success(null, 'Product updated successfully', StatusCode::Continue ->value);
         } catch (Exception $e) {
             return $this->failed(null, StatusCode::InternalServerError->value, $e->getMessage());
         }
@@ -125,14 +123,14 @@ class ProductsController extends Controller
         $data = $this->paginatedData($reviews, $reviewsList);
         return $this->success([
             'paginated' => $data,
-            'avg_rating' => $product->reviews()->avg('rating')
+            'avg_rating' => number_format($product->reviews()->avg('rating'), 1),
         ]);
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
-        return $this->success(null, 'Product deleted successfully', StatusCode::Continue->value);
+        return $this->success(null, 'Product deleted successfully', StatusCode::Continue ->value);
     }
 
     public function removeAdditionalImage(Product $product, $index)
@@ -146,7 +144,7 @@ class ProductsController extends Controller
 
         $product->save();
 
-        return $this->success(null, 'Image removed successfully', StatusCode::Continue->value);
+        return $this->success(null, 'Image removed successfully', StatusCode::Continue ->value);
     }
 
     private function getRatingDistribution(Product $product)

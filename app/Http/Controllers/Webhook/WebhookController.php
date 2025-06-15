@@ -42,8 +42,7 @@ class WebhookController extends Controller
         $invoice->update([
             'status' => 'paid',
         ]);
-
-
+        
         $invoice->items->each(function ($item) {
             $item->product->decrement('available_units', $item->quantity);
             $item->product->increment('units_sold', $item->quantity);

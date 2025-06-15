@@ -12,7 +12,7 @@ trait Cart
     {
         $subTotal = $this->calculateSubTotal($cartItems);
         $shippingFee = ShippingFee::first()?->fee ?? 0;
-        $total = ($subTotal + (float)$shippingFee);
+        $total = ($subTotal + (float) $shippingFee);
         $couponDiscount = $coupon?->value_calculated ?? 0;
 
         if ($coupon?->type === 'fixed') {
@@ -23,8 +23,11 @@ trait Cart
 
         return [
             'sub_total' => $subTotal,
+            'sub_total_formatted' => currency_format($subTotal),
+            'shipping_fee_formatted' => currency_format($shippingFee),
+            'total_formatted' => currency_format($total),
             'coupon_discount' => $couponDiscount ?? 0,
-            'shipping_fee' => (float)$shippingFee,
+            'shipping_fee' => (float) $shippingFee,
             'total' => $total,
         ];
 
@@ -34,7 +37,7 @@ trait Cart
     public function calculateSubTotal($cartItems)
     {
         $subTotal = $cartItems->sum(function ($cartItem) {
-            return (float)$cartItem->product->price * $cartItem->quantity;
+            return (float) $cartItem->product->price * $cartItem->quantity;
         });
 
         return $subTotal;

@@ -6,21 +6,23 @@
             Hi {{$invoice->user->name}},
         </p>
         <p>
-            Great news! Your {{config('app.name')}} order # {{$invoice->id}} has shipped and is now on its way to you.
+            Thank you for shopping with us. Your Order #{{$invoice->id}} has been confirmed. We will let you know when
+            your
+            order ships
         </p>
-        <p>
-            Estimated Delivery:
-            <br>
-            Your order is expected to be delivered in 24-72 hours. However, please note that this is an estimate and
-            delivery times may vary.
-        </p>
+        <a href=""
+           style="background-color: #56F163; padding-top: 0.3rem; padding-bottom: 0.3rem; display: block; border-radius: 100%">Track
+            Order</a>
     </div>
+
+    <x-emails.order-details :invoice="$invoice"/>
+    <x-emails.billing-info :invoice="$invoice"/>
 
     <div>
         <p>Questions?</p>
         <p>
             If you have any questions about your order or its delivery, please don't hesitate to contact our customer
-            support team at <a href="mailto:support@ttavenue.com">support@ttavenue.com</a>.
+            support team at <a href="mailto:support@wearoutsider.com">support@wearoutsider.com</a>.
         </p>
         <p>
             We're here to help! <br>

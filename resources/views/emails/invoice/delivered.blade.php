@@ -18,11 +18,13 @@
 
     <div>
         <ul>
-            <li>Review your order: Feel free to log in to your {{config('app.name')}} account to view your order details and
+            <li>Review your order: Feel free to log in to your {{config('app.name')}} account to view your order details
+                and
                 manage your past purchases.
             </li>
             <li>
-                Leave a review: We appreciate your feedback! Let us know about your experience with {{config('app.name')}} by
+                Leave a review: We appreciate your feedback! Let us know about your experience
+                with {{config('app.name')}} by
                 leaving a review on the product pages of the items you purchased.
             </li>
         </ul>
@@ -33,7 +35,7 @@
         <p>
             If you have any questions about your order or need assistance with anything, please don't hesitate to
             contact our customer support team at <a
-                href="mailto:support@ttavenue.com">support@ttavenue.com</a>.
+                href="mailto:support@wearoutsider.com">support@wearoutsider.com</a>.
         </p>
         <p>
             We're here to help!

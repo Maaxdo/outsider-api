@@ -74,7 +74,7 @@
         <p>Need Help?</p>
         <p>
             If you have any questions about your order, please don't hesitate to contact our customer support team at
-            <a href="mailto:support@ttavenue.com">support@ttavenue.com</a>.
+            <a href="mailto:support@wearoutsider.com">support@wearoutsider.com</a>.
         </p>
         <p>
             We appreciate your business and look forward to getting your order to you soon!
