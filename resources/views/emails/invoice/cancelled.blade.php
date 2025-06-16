@@ -1,31 +1,31 @@
 @extends('layouts.emails.user')
 
 @section('content')
-
     <div>
         <p>
             Hi {{$invoice->user->name}},
         </p>
         <p>
-            This to inform you that your {{config('app.name')}} order # {{$invoice->id}} has been cancelled!
+            Your order #{{$invoice->id}} has been cancelled.
+            Please, if you have any questions or concerns regarding this cancellation, feel free to reach out to us
+            via email at <a target="_blank" href="mailto:support@wearoutsider.com">support@wearoutsider.com</a>
         </p>
-        <p>
-            If you have any questions please contact our support team via <a
-                href="mailto:support@wearoutsider.com">support@wearoutsider.com</a>. Thank you as you comply.
-        </p>
+        <x-emails.order-button :invoice="$invoice" />
     </div>
 
+    <x-emails.order-details :invoice="$invoice" />
+    <x-emails.billing-info :invoice="$invoice" />
+
     <div>
-
+        <p>Questions?</p>
         <p>
-            Need Help?
+            If you have any questions about your order or its delivery, please don't hesitate to contact our customer
+            support team at <a href="mailto:support@wearoutsider.com">support@wearoutsider.com</a>.
         </p>
         <p>
-            If you have any questions about your order or need assistance with anything, please don't hesitate to
-            contact our customer support team at <a
-                href="mailto:support@wearoutsider.com">support@wearoutsider.com</a>.
+            We're here to help! <br>
+            We look forward to getting your order to you soon!
         </p>
-
     </div>
 
 @endsection

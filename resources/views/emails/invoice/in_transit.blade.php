@@ -6,17 +6,16 @@
             Hi {{$invoice->user->name}},
         </p>
         <p>
-            Thank you for shopping with us. Your Order #{{$invoice->id}} has been confirmed. We will let you know when
-            your
-            order ships
+            Thank you for shopping with us. Your Order #{{$invoice->id}} has been shipped!
         </p>
-        <a href=""
-           style="background-color: #56F163; padding-top: 0.3rem; padding-bottom: 0.3rem; display: block; border-radius: 100%">Track
-            Order</a>
+        <p>
+            Please click below to track your delivery status or see more details.
+        </p>
+        <x-emails.order-button :invoice="$invoice" />
     </div>
 
-    <x-emails.order-details :invoice="$invoice"/>
-    <x-emails.billing-info :invoice="$invoice"/>
+    <x-emails.order-details :invoice="$invoice" />
+    <x-emails.billing-info :invoice="$invoice" />
 
     <div>
         <p>Questions?</p>

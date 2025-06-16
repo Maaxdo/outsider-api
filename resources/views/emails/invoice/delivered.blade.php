@@ -1,46 +1,30 @@
 @extends('layouts.emails.user')
 
 @section('content')
-
     <div>
         <p>
             Hi {{$invoice->user->name}},
         </p>
         <p>
-            We're happy to inform you that your {{config('app.name')}} order # {{$invoice->id}} has been delivered!
+            Your order #{{$invoice->id}} has been successfully delivered. Please kindly check your package to ensure
+            everything is in order. If you have any issues or concerns, please let us know as soon as possible.
+            You can also view the delivery of your order by clicking the button below.
         </p>
-        <p>
-            We hope you're happy with your purchase!
-            <br>
-            Next Steps:
-        </p>
+        <x-emails.order-button :invoice="$invoice" />
     </div>
 
-    <div>
-        <ul>
-            <li>Review your order: Feel free to log in to your {{config('app.name')}} account to view your order details
-                and
-                manage your past purchases.
-            </li>
-            <li>
-                Leave a review: We appreciate your feedback! Let us know about your experience
-                with {{config('app.name')}} by
-                leaving a review on the product pages of the items you purchased.
-            </li>
-        </ul>
+    <x-emails.order-details :invoice="$invoice" />
+    <x-emails.billing-info :invoice="$invoice" />
 
+    <div>
+        <p>Questions?</p>
         <p>
-            Need Help?
+            If you have any questions about your order or its delivery, please don't hesitate to contact our customer
+            support team at <a href="mailto:support@wearoutsider.com">support@wearoutsider.com</a>.
         </p>
         <p>
-            If you have any questions about your order or need assistance with anything, please don't hesitate to
-            contact our customer support team at <a
-                href="mailto:support@wearoutsider.com">support@wearoutsider.com</a>.
-        </p>
-        <p>
-            We're here to help!
-            <br>
-            Thank you for choosing {{config('app.name')}}!
+            We're here to help! <br>
+            We look forward to getting your order to you soon!
         </p>
     </div>
 

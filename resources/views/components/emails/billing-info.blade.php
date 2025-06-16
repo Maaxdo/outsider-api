@@ -4,13 +4,13 @@
     $info = json_decode($invoice->billing_information)
 @endphp
 
-<div style="background-color: #F6F6F6; padding: 1rem 0.7rem 1rem 0.7rem; border-radius: 2rem; display: flex">
+<div style="background-color: #F6F6F6; padding: 1rem 0.7rem 1rem 0.7rem; border-radius: 1rem; display: flex">
     <div>
         <p>
             <strong>Ship To:</strong>
         </p>
     </div>
-    <div>
+    <div style="margin-left: 1rem">
         <p>
             {{$info->first_name}} {{$info->last_name}}
         </p>
