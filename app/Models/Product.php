@@ -33,6 +33,9 @@ class Product extends Model
             $builder->where('name', 'like', '%' . request('search') . '%')
                 ->orWhere('description', 'like', '%' . request('search') . '%');
         });
+        $builder->when('category_id', function ($builder) {
+            $builder->where('category_id', request('category_id'));
+        });
         $builder->when(request('size'), function ($builder) {
             $builder->where('sizes', 'like', '%' . request('size') . '%');
         });
