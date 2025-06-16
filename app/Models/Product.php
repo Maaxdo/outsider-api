@@ -40,7 +40,12 @@ class Product extends Model
             $builder->where('sizes', 'like', '%' . request('size') . '%');
         });
         $builder->when(request('color'), function ($builder) {
-            $builder->where('colors_list', 'like', '%' . request('color') . '%');
+            $colors = explode(',', request('color'));
+            $builder->where(function ($query) use ($colors) {
+                foreach ($colors as $color) {
+                    $query->orWhere('colors_list', 'like', '%' . $color . '%');
+                }
+            });
         });
         $builder->when(request('price_start'), function ($builder) {
             $builder->where('base_price', '>=', request('price_start'));
