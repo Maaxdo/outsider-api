@@ -14,14 +14,3 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', function () {
-
-    $invoice = \App\Models\Invoice::first();
-
-//    $invoice->user->notify(new InvoiceAction($invoice));
-
-    return view('emails.invoice.in_transit', [
-        'invoice' => $invoice,
-    ]);
-});
