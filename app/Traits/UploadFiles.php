@@ -18,11 +18,8 @@ trait UploadFiles
         }
 
         foreach ($documentFiles as $file) {
-            $uuid = Str::uuid();
-
-            $fileName = time() . '_'  . $uuid . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/' . $folder, $fileName);
-            array_push($documents, "{$folder}/{$fileName}");
+            $fileName = $file->store($folder, 'public');
+            array_push($documents, $fileName);
         }
 
         return $documents;
@@ -30,11 +27,7 @@ trait UploadFiles
 
     public function uploadFile($file, $folder)
     {
-        $uuid = Str::uuid();
-        $fileName = time() . '_' . $uuid . '_' . $file->getClientOriginalName();
-
-        $file->storeAs('public/' . $folder, $fileName);
-        return "{$folder}/{$fileName}";
+        return $file->store($folder, 'public');
     }
 
     public function getFilePath(?string $path)
