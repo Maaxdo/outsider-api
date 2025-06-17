@@ -22,6 +22,7 @@ class CategoriesController extends Controller
         $category = Category::where('slug', $slug)->firstOrFail();
         $products = Product::where('category_id', $category->id)
             ->filter()
+            ->latest()
             ->paginate(16);
         $productsList = ProductListItemResource::collection($products);
 

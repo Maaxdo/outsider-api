@@ -22,7 +22,7 @@ class ProductsController extends Controller
 
     public function viewAll()
     {
-        $products = Product::filter()->paginate(12);
+        $products = Product::filter()->latest()->paginate(12);
 
         $productsList = ProductListItemResource::collection($products);
 
@@ -44,6 +44,7 @@ class ProductsController extends Controller
     {
         $products = Product::whereNotNull('discounted_price')
             ->where('discounted_price', '>', 0)
+            ->latest()
             ->limit(12)->get();
 
         $productsList = ProductListItemResource::collection($products);
@@ -55,11 +56,12 @@ class ProductsController extends Controller
     {
         $products = Product::withSum('invoiceItems', 'quantity')
             ->orderByDesc('invoice_items_sum_quantity')
+            ->latest()
             ->limit(8)
             ->get();
 
         $list = ProductListItemResource::collection($products);
-        ;
+
 
         return $this->success($list);
     }
