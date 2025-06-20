@@ -35,7 +35,7 @@ class UsersController extends Controller
     public function createAdmin(CreateAdminRequest $request)
     {
         $admin = $request->createAdmin();
-        $admin->notify(new NewAdmin($admin));
+        $admin->notify(new NewAdmin($admin, $request->password));
 
         return $this->success(null, 'Admin created successfully');
     }

@@ -15,7 +15,7 @@ class NewAdmin extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(public User $user)
+    public function __construct(public User $user, public string $password)
     {
         //
     }
@@ -39,6 +39,7 @@ class NewAdmin extends Notification
             ->subject('Your Admin Account has been created')
             ->view('emails.user.new-admin', [
                 'user' => $this->user,
+                'password' => $this->password,
             ]);
     }
 

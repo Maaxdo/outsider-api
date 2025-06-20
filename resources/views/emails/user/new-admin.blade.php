@@ -11,6 +11,8 @@
             You can
             now access all the admin services and features of our web app without any restrictions.
         </p>
+        <p>Below is your login information. <strong>DO NOT SHARE THIS PASSWORD WITH ANYBODY</strong></p>
+        <h2 style="text-align: center;">{{ $password }}</h2>
         <p>
             If you have any questions or need further assistance, please do not hesitate to reach out to our support
             team at <a href="mailto:support@wearoutsider.com">support@wearoutsider.com</a>. We are here to help you
