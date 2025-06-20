@@ -149,6 +149,7 @@ Route::
                         Route::get('/', 'User\UsersController@viewAll');
                         Route::get('/{user}', 'User\UsersController@view');
                         Route::patch('/{user}/{status}', 'User\UsersController@updateStatus');
+                        Route::post('/create-admin', 'User\UsersController@createAdmin');
                     });
 
                     Route::prefix('shipping-fee')->group(function () {

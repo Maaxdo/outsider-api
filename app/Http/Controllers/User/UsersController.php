@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\CreateAdminRequest;
 use App\Http\Resources\Invoice\RecentPurchaseResource;
 use App\Http\Resources\Invoice\SaleResource;
 use App\Http\Resources\User\UserListResource;
 use App\Models\User;
+use App\Notifications\User\NewAdmin;
 use App\Notifications\User\StatusUpdated;
 use App\Traits\HttpResponses;
 use App\Traits\Pagination;
@@ -30,6 +32,14 @@ class UsersController extends Controller
         return $this->success($usersData);
     }
 
+    public function createAdmin(CreateAdminRequest $request)
+    {
+        $admin = $request->createAdmin();
+        $admin->notify(new NewAdmin($admin));
+
+        return $this->success(null, 'Admin created successfully');
+    }
+
     public function view(User $user)
     {
 
@@ -45,7 +55,7 @@ class UsersController extends Controller
 
 
         $data = [
-            'id' => (string)$user->id,
+            'id' => (string) $user->id,
             'name' => $user->full_name,
             'email' => $user->email,
             'phone' => $user->phone,
