@@ -18,10 +18,11 @@ class UserProfileResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => (string)$this->id,
+            'id' => (string) $this->id,
             'name' => $this->full_name,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
+            'permissions' => $this->role === 'user' ? [] : explode(',', $this->permissions),
             'email' => $this->email,
             'email_verified_at' => $this->email_verified_at,
             'created_at' => $this->created_at,

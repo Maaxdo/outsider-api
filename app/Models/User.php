@@ -27,7 +27,8 @@ class User extends Authenticatable
         'role',
         'avatar',
         'status',
-        'communication_preference'
+        'communication_preference',
+        'permissions'
     ];
 
     /**
@@ -50,6 +51,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public const PERMISSIONS = [
+        'finance',
+        'web_management',
+        'support'
+    ];
+
 
     public function scopeFilter(Builder $builder)
     {
@@ -59,6 +66,26 @@ class User extends Authenticatable
                 ->orWhere('last_name', 'like', '%' . request('search') . '%')
                 ->orWhere('email', 'like', '%' . request('search') . '%');
         });
+    }
+
+    public function hasPermissions($permissions): bool
+    {
+        $userPermissions = explode(',', $this->permissions);
+        $found = [];
+        foreach ($permissions as $permission) {
+            if (in_array($permission, $userPermissions)) {
+                $found[] = $permission;
+            }
+        }
+
+        foreach ($found as $item) {
+            if (in_array($item, $userPermissions)) {
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
     public function getFullNameAttribute()

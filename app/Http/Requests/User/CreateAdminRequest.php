@@ -29,6 +29,8 @@ class CreateAdminRequest extends FormRequest
             'phone' => ['required', 'numeric'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'permissions' => ['required', 'array', 'min:1'],
+            'permissions.*' => ['string', 'in:' . implode(',', User::PERMISSIONS)],
         ];
     }
 
@@ -44,7 +46,8 @@ class CreateAdminRequest extends FormRequest
             'email' => $this->email,
             'password' => $password,
             'status' => 'active',
-            'role' => 'admin'
+            'role' => 'admin',
+            'permissions' => implode(',', $this->permissions),
         ]);
 
 

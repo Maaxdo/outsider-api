@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\Permissions;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::
         namespace('App\Http\Controllers')->group(function () {
+
 
 
             Route::prefix('auth')->group(function () {
@@ -40,7 +43,13 @@ Route::
                 Route::get('/', 'Category\CategoriesController@viewAll');
                 Route::get('/featured', 'Category\CategoriesController@viewFeatured');
                 Route::get('/{slug}', 'Category\CategoriesController@view');
-                Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->group(function () {
+                Route::middleware([
+                    'auth:sanctum',
+                    'verified',
+                    'role:admin',
+                    Permissions::class . ':web_management'
+
+                ])->group(function () {
                     Route::post('/', 'Category\CategoriesController@store');
                     Route::post('/{category}/update', 'Category\CategoriesController@update');
                     Route::delete('/{category}', 'Category\CategoriesController@destroy');
@@ -51,12 +60,18 @@ Route::
             Route::prefix('products')->group(function () {
                 Route::get('/', 'Products\ProductsController@viewAll');
 
-                Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->group(function () {
-                    Route::post('/', 'Products\ProductsController@store');
-                    Route::patch('/{product}/remove-image/{index}', 'Products\ProductsController@removeAdditionalImage');
-                    Route::delete('/{product}', 'Products\ProductsController@destroy');
-                    Route::post('/{product}/update', 'Products\ProductsController@update');
-                });
+                Route::middleware([
+                    'auth:sanctum',
+                    'verified',
+                    'role:admin',
+                    Permissions::class . ':support,web_management,finance'
+                ])
+                    ->group(function () {
+                        Route::post('/', 'Products\ProductsController@store');
+                        Route::patch('/{product}/remove-image/{index}', 'Products\ProductsController@removeAdditionalImage');
+                        Route::delete('/{product}', 'Products\ProductsController@destroy');
+                        Route::post('/{product}/update', 'Products\ProductsController@update');
+                    });
                 Route::get('/popular', 'Products\ProductsController@viewPopular');
                 Route::get('/latest', 'Products\ProductsController@viewLatest');
                 Route::get('/low-cost', 'Products\ProductsController@viewLowCost');
@@ -125,7 +140,7 @@ Route::
                 Route::prefix('reviews')->group(function () {
                     Route::post('/', 'Reviews\ReviewsController@store');
 
-                    Route::middleware('role:admin')->group(function () {
+                    Route::middleware(['role:admin', Permissions::class . ':support,web_management'])->group(function () {
                         Route::get('/', 'Reviews\ReviewsController@viewAll');
                         Route::get('/{review}', 'Reviews\ReviewsController@view');
                     });
@@ -137,30 +152,44 @@ Route::
                         Route::get('/', 'Overview\OverviewController');
                     });
 
-                    Route::prefix('coupons')->group(function () {
-                        Route::get('/', 'Coupon\CouponController@viewAll');
-                        Route::post('/', 'Coupon\CouponController@store');
-                        Route::get('/{coupon}', 'Coupon\CouponController@view');
-                        Route::patch('/{coupon}', 'Coupon\CouponController@update');
-                        Route::delete('/{coupon}', 'Coupon\CouponController@destroy');
+
+                    Route::middleware(Permissions::class . ':finance,web_management')->group(function () {
+                        Route::prefix('coupons')->group(function () {
+                            Route::get('/', 'Coupon\CouponController@viewAll');
+                            Route::post('/', 'Coupon\CouponController@store');
+                            Route::get('/{coupon}', 'Coupon\CouponController@view');
+                            Route::patch('/{coupon}', 'Coupon\CouponController@update');
+                            Route::delete('/{coupon}', 'Coupon\CouponController@destroy');
+                        });
+                        Route::prefix('shipping-fee')->group(function () {
+                            Route::put('/', 'Settings\ShippingFeeController@save');
+                            Route::get('/', 'Settings\ShippingFeeController@view');
+                        });
                     });
+
 
                     Route::prefix('users')->group(function () {
-                        Route::get('/', 'User\UsersController@viewAll');
-                        Route::get('/{user}', 'User\UsersController@view');
-                        Route::patch('/{user}/{status}', 'User\UsersController@updateStatus');
-                        Route::post('/create-admin', 'User\UsersController@createAdmin');
+                        Route::middleware(Permissions::class . ':support,web_management')
+                            ->group(function () {
+                                Route::get('/', 'User\UsersController@viewAll');
+                                Route::get('/{user}', 'User\UsersController@view');
+                                Route::patch('/{user}/{status}', 'User\UsersController@updateStatus');
+                            });
+                        Route::middleware(Permissions::class . ':web_management')
+                            ->group(function () {
+                                Route::post('/create-admin', 'User\UsersController@createAdmin');
+                            });
                     });
 
-                    Route::prefix('shipping-fee')->group(function () {
-                        Route::put('/', 'Settings\ShippingFeeController@save');
-                        Route::get('/', 'Settings\ShippingFeeController@view');
-                    });
 
-                    Route::prefix('hero-details')->group(function () {
-                        Route::post('/', 'Home\HomeController@store');
-                        Route::delete('/{details}', 'Home\HomeController@destroy');
-                        Route::post('/{details}/update', 'Home\HomeController@update');
+
+
+                    Route::middleware(Permissions::class . ':web_management')->group(function () {
+                        Route::prefix('hero-details')->group(function () {
+                            Route::post('/', 'Home\HomeController@store');
+                            Route::delete('/{details}', 'Home\HomeController@destroy');
+                            Route::post('/{details}/update', 'Home\HomeController@update');
+                        });
                     });
                 });
             });
