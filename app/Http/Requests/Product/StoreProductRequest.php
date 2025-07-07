@@ -28,7 +28,7 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'featured_image' => ['required', 'image', 'max:3072', 'mimes:jpeg,jpg,png'],
-            'additional_images' => ['nullable', 'array', 'max:3'],
+            'additional_images' => ['nullable', 'array', 'max:8'],
             'additional_images.*' => ['image', 'max:3072', 'mimes:jpeg,jpg,png'],
             'base_price' => ['required', 'numeric', 'min:0'],
             'discounted_price' => ['nullable', 'numeric', 'min:0'],
