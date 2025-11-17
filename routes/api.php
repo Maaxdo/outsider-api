@@ -17,9 +17,6 @@ use App\Http\Middleware\Permissions;
 
 Route::
         namespace('App\Http\Controllers')->group(function () {
-
-
-
             Route::prefix('auth')->group(function () {
 
                 Route::post('/signin', 'Auth\AuthController@signIn');
